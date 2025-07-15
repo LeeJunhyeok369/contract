@@ -1,0 +1,10 @@
+streamlit
+pandas
+pytesseract
+Pillow
+pdfplumber
+requests
+torch
+transformers
+scikit-learn
+openpyxl
