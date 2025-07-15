@@ -153,6 +153,9 @@ if st.session_state["contract_type"]:
                 if matched:
                     clauses[term] = matched
         return cat, summary, kws, clauses
+    address = "서울특별시 중구 세종대로 110"  # 예시 주소
+    naver_map_url = f"https://map.naver.com/v5/search/{address}"
+    st.markdown(f"🔗 [네이버 지도에서 지적도 확인]({naver_map_url})", unsafe_allow_html=True)
 
     with st.expander("1) 외부 정보 조회", expanded=True):
         if contract_type == "부동산계약서":
