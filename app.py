@@ -156,74 +156,87 @@ if st.session_state["contract_type"]:
     address = "서울특별시 중구 세종대로 110"  # 예시 주소
     naver_map_url = f"https://map.naver.com/v5/search/{address}"
     st.markdown(f"🔗 [네이버 지도에서 지적도 확인]({naver_map_url})", unsafe_allow_html=True)
-
     with st.expander("1) 외부 정보 조회", expanded=True):
         if contract_type == "부동산계약서":
             st.markdown("#### 주소로 지적도 조회")
             address = st.text_input("주소를 입력하세요", key="re_map_addr")
             if st.button("지적도 보기", key="re_map_btn") and address.strip():
-                client_id = os.environ['NAVER_CLIENT_ID']  # 클라이언트 ID
-                client_secret = os.environ['NAVER_CLIENT_SECRET']  # 시크릿 키
-                url = f"https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query={address}"
-                headers = {
-                    "X-NCP-APIGW-API-KEY-ID": client_id,
-                    "X-NCP-APIGW-API-KEY": client_secret
-                }
-                res = requests.get(
-                    url, headers=headers,
-                )
+                naver_map_url = f"https://map.naver.com/v5/search/{address}"
+                st.markdown(f"""
+                🔗 [네이버 지도(지적편집도) 바로가기]({naver_map_url})
+
+                <span style='color:#888;font-size:calc(0.9em);'>
+                지도 우측 상단 <b>'지도유형'</b>에서 <b>'지적편집도'</b>를 클릭해 직접 확인하세요.
+                </span>
+                """, unsafe_allow_html=True)
+
+    # with st.expander("1) 외부 정보 조회", expanded=True):
+    #     if contract_type == "부동산계약서":
+    #         st.markdown("#### 주소로 지적도 조회")
+    #         address = st.text_input("주소를 입력하세요", key="re_map_addr")
+    #         if st.button("지적도 보기", key="re_map_btn") and address.strip():
+    #             client_id = os.environ['NAVER_CLIENT_ID']  # 클라이언트 ID
+    #             client_secret = os.environ['NAVER_CLIENT_SECRET']  # 시크릿 키
+    #             url = f"https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query={address}"
+    #             headers = {
+    #                 "X-NCP-APIGW-API-KEY-ID": client_id,
+    #                 "X-NCP-APIGW-API-KEY": client_secret
+    #             }
+    #             res = requests.get(
+    #                 url, headers=headers,
+    #             )
                 
-                data = res.json()
-                print(data)
-                if data.get('addresses'):
-                    lat = data['addresses'][0]['y']
-                    lng = data['addresses'][0]['x']
-                    print(lat, lng)
-                    map_html = f"""
-                    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId={client_id}"></script>
-                    <div id="map" style="width:100%;height:400px;"></div>
-                    <button id="cadastral" style="margin:10px;">지적도 끄기</button>
+    #             data = res.json()
+    #             print(data)
+    #             if data.get('addresses'):
+    #                 lat = data['addresses'][0]['y']
+    #                 lng = data['addresses'][0]['x']
+    #                 print(lat, lng)
+    #                 map_html = f"""
+    #                 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId={client_id}"></script>
+    #                 <div id="map" style="width:100%;height:400px;"></div>
+    #                 <button id="cadastral" style="margin:10px;">지적도 끄기</button>
                     
-                    <script>
-                        var map = new naver.maps.Map('map', {{
-                            center: new naver.maps.LatLng({lat}, {lng}),
-                            zoom: 17,
-                            mapTypeControl: true,
-                              mapTypeControlOptions: {{
-                                style: naver.maps.MapTypeControlStyle.DROPDOWN
-                            }}
-                        }});
-                        var cadastralLayer = new naver.maps.CadastralLayer();
-                        var btn = document.getElementById('cadastral');
-                        naver.maps.Event.addListener(map, 'cadastralLayer_changed', function() {{
-                            if (cadastralLayer.getMap()) {{
-                                btn.classList.add('control-on');
-                                btn.innerText = '지적도 끄기';
-                            }} else {{
-                                btn.classList.remove('control-on');
-                                btn.innerText = '지적도 켜기';
-                            }}
-                        }});
-                        btn.onclick = function(e) {{
-                            e.preventDefault();
-                            if (cadastralLayer.getMap()) {{
-                                cadastralLayer.setMap(null);
-                                btn.classList.remove('control-on');
-                                btn.innerText = '지적도 켜기';
-                            }} else {{
-                                cadastralLayer.setMap(map);
-                                btn.classList.add('control-on');
-                                btn.innerText = '지적도 끄기';
-                            }}
-                        }};
-                        naver.maps.Event.once(map, 'init', function() {{
-                            cadastralLayer.setMap(map);
-                        }});
-                    </script>
-                    """
-                    st.components.v1.html(map_html, height=450)
-                else:
-                    st.warning("주소를 찾을 수 없습니다. 예: 서울특별시 중구 세종대로 110")
+    #                 <script>
+    #                     var map = new naver.maps.Map('map', {{
+    #                         center: new naver.maps.LatLng({lat}, {lng}),
+    #                         zoom: 17,
+    #                         mapTypeControl: true,
+    #                           mapTypeControlOptions: {{
+    #                             style: naver.maps.MapTypeControlStyle.DROPDOWN
+    #                         }}
+    #                     }});
+    #                     var cadastralLayer = new naver.maps.CadastralLayer();
+    #                     var btn = document.getElementById('cadastral');
+    #                     naver.maps.Event.addListener(map, 'cadastralLayer_changed', function() {{
+    #                         if (cadastralLayer.getMap()) {{
+    #                             btn.classList.add('control-on');
+    #                             btn.innerText = '지적도 끄기';
+    #                         }} else {{
+    #                             btn.classList.remove('control-on');
+    #                             btn.innerText = '지적도 켜기';
+    #                         }}
+    #                     }});
+    #                     btn.onclick = function(e) {{
+    #                         e.preventDefault();
+    #                         if (cadastralLayer.getMap()) {{
+    #                             cadastralLayer.setMap(null);
+    #                             btn.classList.remove('control-on');
+    #                             btn.innerText = '지적도 켜기';
+    #                         }} else {{
+    #                             cadastralLayer.setMap(map);
+    #                             btn.classList.add('control-on');
+    #                             btn.innerText = '지적도 끄기';
+    #                         }}
+    #                     }};
+    #                     naver.maps.Event.once(map, 'init', function() {{
+    #                         cadastralLayer.setMap(map);
+    #                     }});
+    #                 </script>
+    #                 """
+    #                 st.components.v1.html(map_html, height=450)
+                # else:
+                #     st.warning("주소를 찾을 수 없습니다. 예: 서울특별시 중구 세종대로 110")
 
         else:
             search_key = f"defaulter_search_{state_key}"
