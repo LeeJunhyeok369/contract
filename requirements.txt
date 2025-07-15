@@ -6,5 +6,5 @@ pdfplumber
 requests
 torch
 transformers
-scikit-learn
 openpyxl
+scikit-learn==1.6.1
