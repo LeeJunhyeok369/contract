@@ -938,11 +938,11 @@ else:
             }}
             
             function waitForKakaoMap() {{
-                if (window.kakao && document.getElementById('map')) {{
-                    console.log("바로 실행" + document.getElementById('map') + window.kakao)
+                if (document.getElementById('map')) {{
+                    console.log("바로 실행" + document.getElementById('map'))
                     initKakaoMap();
                 }} else {{
-                    console.log("늦게 실행" + document.getElementById('map') + window.kakao)
+                    console.log("늦게 실행" + document.getElementById('map'))
                     setTimeout(waitForKakaoMap, 100);
                 }}
             }}
