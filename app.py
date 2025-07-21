@@ -946,6 +946,7 @@ else:
                     setTimeout(waitForKakaoMap, 100);
                 }}
             }}
+            console.log("늦게 실행" + document.getElementById('map') + window.kakao + window.kakao.maps)
             waitForKakaoMap();
             </script>
         """, height=480)
