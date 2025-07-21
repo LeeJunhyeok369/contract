@@ -612,7 +612,7 @@ KEYWORD_EXCEL_PATH = r"./불공정_키워드_표형식_단어쪼개기_186x20.xl
 detector = KeywordDetector(KEYWORD_EXCEL_PATH)
 
 KAKAO_REST_API_KEY = st.secrets["KAKAO_REST_API_KEY"]
-KAKAO_JS_KEY = st.secrets["KAKAO_REST_API_KEY"]
+KAKAO_JS_KEY = st.secrets["KAKAO_JS_KEY"]
 
 if "lang" not in st.session_state:
     st.session_state["lang"] = "ko"
