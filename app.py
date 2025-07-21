@@ -1,7 +1,7 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-# import warnings
-# warnings.filterwarnings("ignore")
+import warnings
+warnings.filterwarnings("ignore")
 
 import streamlit as st
 import pytesseract
@@ -939,8 +939,10 @@ else:
             
             function waitForKakaoMap() {{
                 if (window.kakao && window.kakao.maps && document.getElementById('map')) {{
+                    console.log("바로 실행" + document.getElementById('map') + window.kakao + window.kakao.maps)
                     initKakaoMap();
                 }} else {{
+                    console.log("늦게 실행" + document.getElementById('map') + window.kakao + window.kakao.maps)
                     setTimeout(waitForKakaoMap, 100);
                 }}
             }}
