@@ -876,64 +876,73 @@ else:
                         st.session_state['map_coords'] = (37.5665, 126.978)
             map_lat, map_lng = st.session_state.get('map_coords', (37.5665, 126.978))
             st.components.v1.html(f"""
-                <style>
-                    #toggle_cadastral {{
-                        width: 100%;
-                        padding: 13px 0;
-                        font-size: 1.07em;
-                        font-weight: 600;
-                        border: none;
-                        border-radius: 8px;
-                        background: #f1f4fa;
-                        color: #174CA1;
-                        margin-top: 8px;
-                        cursor: pointer;
-                        box-shadow: 0 2px 8px #e0e7ef;
-                        transition: background 0.2s, color 0.2s;
-                        outline: none;
-                    }}
-                    #toggle_cadastral:hover {{
-                        background: #174CA1;
-                        color: #fff;
-                    }}
-                    #toggle_cadastral:active {{
-                        background: #0e295c;
-                        color: #fff;
-                    }}
-                </style>
-                <div id="map" style="width:100%;height:400px;border-radius:8px;"></div>
-                <div style="margin-top:10px;">
-                    <button id="toggle_cadastral" class="">{tt('addr_fail')}</button>
-                </div>
-                <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={KAKAO_JS_KEY}&libraries=services"></script>
-                <script>
-                let map, cadastral, kakaoMarker = null;
-                window.onload = function () {{
-                    var container = document.getElementById('map');
-                    var center = new kakao.maps.LatLng({map_lat}, {map_lng});
-                    var options = {{
-                        center: center,
-                        level: 1
-                    }};
-                    map = new kakao.maps.Map(container, options);
-                    map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
-                    var markerPosition  = new kakao.maps.LatLng({map_lat}, {map_lng});
-                    kakaoMarker = new kakao.maps.Marker({{
-                        position: markerPosition,
-                        map: map
-                    }});
-                    document.getElementById("toggle_cadastral").onclick = function () {{
-                        if (this.innerText == '{tt("addr_fail")}') {{
-                            map.removeOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
-                            this.innerText = '{tt("addr_fail2")}';
-                        }} else {{
-                            map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
-                            this.innerText = '{tt("addr_fail")}';
-                        }}
-                    }};
+            <style>
+                #toggle_cadastral {{
+                    width: 100%;
+                    padding: 13px 0;
+                    font-size: 1.07em;
+                    font-weight: 600;
+                    border: none;
+                    border-radius: 8px;
+                    background: #f1f4fa;
+                    color: #174CA1;
+                    margin-top: 8px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 8px #e0e7ef;
+                    transition: background 0.2s, color 0.2s;
+                    outline: none;
+                }}
+                #toggle_cadastral:hover {{
+                    background: #174CA1;
+                    color: #fff;
+                }}
+                #toggle_cadastral:active {{
+                    background: #0e295c;
+                    color: #fff;
+                }}
+            </style>
+            <div id="map" style="width:100%;height:400px;border-radius:8px;"></div>
+            <div style="margin-top:10px;">
+                <button id="toggle_cadastral" class="">{tt('addr_fail')}</button>
+            </div>
+            <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={KAKAO_JS_KEY}&libraries=services"></script>
+            <script>
+            function initKakaoMap() {{
+                var container = document.getElementById('map');
+                var center = new kakao.maps.LatLng({map_lat}, {map_lng});
+                var options = {{
+                    center: center,
+                    level: 1
                 }};
-                </script>
-            """, height=480)
+                var map = new kakao.maps.Map(container, options);
+                map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
+
+                var markerPosition  = new kakao.maps.LatLng({map_lat}, {map_lng});
+                var kakaoMarker = new kakao.maps.Marker({{
+                    position: markerPosition,
+                    map: map
+                }});
+                document.getElementById("toggle_cadastral").onclick = function () {{
+                    if (this.innerText == '{tt("addr_fail")}') {{
+                        map.removeOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
+                        this.innerText = '{tt("addr_fail2")}';
+                    }} else {{
+                        map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
+                        this.innerText = '{tt("addr_fail")}';
+                    }}
+                }};
+            }}
+            function waitForKakaoMap() {{
+                if (window.kakao && window.kakao.maps) {{
+                    initKakaoMap();
+                }} else {{
+                    setTimeout(waitForKakaoMap, 100);  // 0.1초마다 반복
+                }}
+            }}
+            waitForKakaoMap();
+            </script>
+        """, height=480)
+
         else:
             search_key = f"defaulter_search_{state_key}"
             btn_key = f"btn_defaulter_search_{state_key}"
