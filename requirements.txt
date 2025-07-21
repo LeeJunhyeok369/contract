@@ -1,10 +1,11 @@
 streamlit
 pandas
-pytesseract
-Pillow
-pdfplumber
+openpyxl
 requests
+requests-toolbelt
+pdfplumber
+pytesseract
+pillow
 torch
 transformers
-openpyxl
 scikit-learn==1.6.1
