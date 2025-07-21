@@ -907,7 +907,11 @@ else:
             </div>
             <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={KAKAO_JS_KEY}&libraries=services"></script>
             <script>
+            var kakaoMapInitialized = false;
+            
             function initKakaoMap() {{
+                kakaoMapInitialized = true;
+                
                 var container = document.getElementById('map');
                 var center = new kakao.maps.LatLng({map_lat}, {map_lng});
                 var options = {{
@@ -932,11 +936,12 @@ else:
                     }}
                 }};
             }}
+            
             function waitForKakaoMap() {{
-                if (window.kakao && window.kakao.maps) {{
+                if (window.kakao && window.kakao.maps && document.getElementById('map')) {{
                     initKakaoMap();
                 }} else {{
-                    setTimeout(waitForKakaoMap, 100);  // 0.1초마다 반복
+                    setTimeout(waitForKakaoMap, 100);
                 }}
             }}
             waitForKakaoMap();
