@@ -1,7 +1,6 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-import warnings
-warnings.filterwarnings("ignore")
+
 
 import streamlit as st
 import pytesseract
@@ -16,6 +15,8 @@ import requests
 from requests_toolbelt import MultipartEncoder
 import uuid
 import time
+import warnings
+warnings.filterwarnings("ignore")
 
 PAPAGO_CLIENT_ID = st.secrets["PAPAGO_CLIENT_ID"]
 PAPAGO_CLIENT_SECRET = st.secrets["PAPAGO_CLIENT_SECRET"]
