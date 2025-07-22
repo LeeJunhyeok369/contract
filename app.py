@@ -850,7 +850,7 @@ if st.session_state["contract_type"] is None:
 else:
     if st.button(tt("back_btn")):
         st.session_state["contract_type"] = None
-        # st.rerun()
+        st.rerun()
     contract_type = st.session_state["contract_type"]
     state_key = contract_type
     st.markdown(tt("workflow").format(tt(
