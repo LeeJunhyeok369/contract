@@ -619,7 +619,7 @@ if "lang" not in st.session_state:
     st.session_state["lang"] = "ko"
 def change_language():
     st.session_state['lang'] = lang_options[st.session_state['lang_select']]
-    st.rerun()
+    # st.rerun()
 
 with st.sidebar:
     lang_options = {
@@ -645,11 +645,11 @@ def show_agreement_dialog(contract_type):
     with col1:
         if st.button(tt("onboard_agree_btn"), use_container_width=True):
             st.session_state["contract_type"] = contract_type
-            st.rerun()
+            # st.rerun()
     with col2:
         if st.button(tt("onboard_cancel_btn"), use_container_width=True):
             st.session_state["contract_type"] = None
-            st.rerun()
+            # st.rerun()
 
 def kakao_geocode(address, rest_api_key):
     url = "https://dapi.kakao.com/v2/local/search/address.json"
@@ -850,7 +850,7 @@ if st.session_state["contract_type"] is None:
 else:
     if st.button(tt("back_btn")):
         st.session_state["contract_type"] = None
-        st.rerun()
+        # st.rerun()
     contract_type = st.session_state["contract_type"]
     state_key = contract_type
     st.markdown(tt("workflow").format(tt(
