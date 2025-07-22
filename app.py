@@ -1056,19 +1056,23 @@ else:
             percent = (matched_sentences / total_sentences * 100) if total_sentences else 0.0
             pct_str = f"{percent:.1f}%"
 
-            # 메시지 결정
+            lang = st.session_state.get("lang", "ko")
+
+            # 메시지/색상 결정 (딕셔너리 활용)
             if percent < 10:
-                msg = "위험조항이 일부 검출되었으니 계약서를 다시 검토해 주세요."
+                msg_key = "msg10"
                 color = "green"
             elif percent < 30:
-                msg = "위험조항이 다소 검출되었으니, 계약 내용을 재확인해 주세요."
+                msg_key = "msg10"
                 color = "orange"
             elif percent < 50:
-                msg = "다량의 위험조항이 발견되었습니다. 계약을 권고하지 않습니다."
+                msg_key = "msg30"
                 color = "red"
             else:
-                msg = "계약서 대부분이 위험조항으로 검출되었습니다."
+                msg_key = "msg50"
                 color = "darkred"
+
+            msg = TEXTS.get(msg_key, {}).get(lang, TEXTS.get(msg_key, {}).get("ko", ""))
 
             st.markdown(
                 f"""
@@ -1079,6 +1083,7 @@ else:
                 """,
                 unsafe_allow_html=True
             )
+
 
             st.progress(min(percent / 100, 1.0))
             if not clauses:
