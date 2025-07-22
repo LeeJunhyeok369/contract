@@ -906,6 +906,8 @@ else:
                 <button id="toggle_cadastral" class="">{tt('addr_fail')}</button>
             </div>
             <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={KAKAO_JS_KEY}&libraries=services"></script>
+            <script src="https://t1.daumcdn.net/mapjsapi/js/main/4.4.19/kakao.js"></script>
+            <script src="http://t1.daumcdn.net/mapjsapi/js/libs/services/1.0.2/services.js"></script>
             <script>
             var kakaoMapInitialized = false;
             
