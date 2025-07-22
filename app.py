@@ -645,11 +645,11 @@ def show_agreement_dialog(contract_type):
     with col1:
         if st.button(tt("onboard_agree_btn"), use_container_width=True):
             st.session_state["contract_type"] = contract_type
-            # st.rerun()
+            st.rerun()
     with col2:
         if st.button(tt("onboard_cancel_btn"), use_container_width=True):
             st.session_state["contract_type"] = None
-            # st.rerun()
+            st.rerun()
 
 def kakao_geocode(address, rest_api_key):
     url = "https://dapi.kakao.com/v2/local/search/address.json"
