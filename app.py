@@ -619,7 +619,6 @@ if "lang" not in st.session_state:
     st.session_state["lang"] = "ko"
 def change_language():
     st.session_state['lang'] = lang_options[st.session_state['lang_select']]
-    # st.rerun()
 
 with st.sidebar:
     lang_options = {
